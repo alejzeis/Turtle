@@ -25,7 +25,8 @@ public class OpenConnectionRequest1 extends BasePacket{
 
     @Override
     public void decode(){
-        this.structure = buffer.get(2);
+        buffer.get(new byte[17]);
+        this.structure = buffer.get();
         this.mtu = (short) packet.getLength();
     }
 

@@ -26,7 +26,7 @@ public class OpenConnectionReply2 extends BasePacket{
         buffer.put(PacketInfo.OpenConnectionReply2);
         buffer.put(magic);
         buffer.putLong(serverID);
-        buffer.putInt(port);
+        buffer.putShort((short) port);
         buffer.putShort(mtu);
         buffer.put(security);
         this.packet = new DatagramPacket(buffer.array(), buffer.capacity(), ip, port);

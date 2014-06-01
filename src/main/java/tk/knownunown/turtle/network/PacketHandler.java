@@ -62,6 +62,7 @@ public class PacketHandler extends Thread {
                 recv.decode();
                 OpenConnectionReply2 reply = new OpenConnectionReply2(packet.getAddress(), packet.getPort());
                 reply.serverID = ProtocolInfo.serverID;
+                Turtle.log(String.valueOf(reply.mtu));
                 reply.mtu = recv.mtu;
                 reply.security = 0; //as security is always off, constant value
                 reply.encode();

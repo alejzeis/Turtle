@@ -25,7 +25,7 @@ public class OpenConnectionRequest2 extends BasePacket {
 
     @Override
     public void decode(){
-        this.mtu = buffer.getShort(4);
-        this.clientID = buffer.getLong(5);
+        this.mtu = buffer.getShort(22);
+        this.clientID = buffer.getLong(24);
     }
 }
