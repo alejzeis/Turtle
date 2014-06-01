@@ -23,17 +23,20 @@ public class UnconnectedPingOpenConnections extends BasePacket {
     }
 
     public void encode(){
+        buffer = ByteBuffer.allocate(46 + identifier.length());
+        buffer.putInt(PacketInfo.UnconnectedPingOpenConnections);
         buffer.putLong(pingID);
         buffer.putLong(serverID);
         buffer.put(magic);
         buffer.putShort((short) identifier.length());
         buffer.put(identifier.getBytes());
-        byte[] bytes = new byte[buffer.capacity()];
-        buffer.get(bytes, 0, bytes.length);
+        byte[] bytes = new byte[buffer.clear().capacity()];
+        buffer.get(bytes);
         this.packet = new DatagramPacket(bytes, bytes.length, ip, port);
     }
 
     public DatagramPacket getPacket(){
+
         return this.packet; //so that we don't get denied by protected status
     }
 

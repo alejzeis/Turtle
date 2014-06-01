@@ -1,27 +1,27 @@
 package tk.knownunown.turtle.network;
 
+import tk.knownunown.turtle.Turtle;
+
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.concurrent.PriorityBlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by andrew on 5/25/14.
  */
 public class NetworkHandler extends Thread {
 
-    public static List sendQueue = Collections.synchronizedList(new ArrayList());
-    public static List recvQueue = Collections.synchronizedList(new ArrayList());
-    public PacketHandler packetHandler = new PacketHandler();
+    public Queue<DatagramPacket> sendQueue = new LinkedList<DatagramPacket>();
     private DatagramSocket socket;
     public static boolean isStopped;
 
     public NetworkHandler(){
         isStopped = false;
-
         this.start();
     }
 
@@ -43,16 +43,20 @@ public class NetworkHandler extends Thread {
             DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
             try {
                 socket.receive(packet);
-                recvQueue.add(packet);
+                new PacketHandler(this, packet).start();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            if(!sendQueue.isEmpty()){
-                try {
-                    socket.send((DatagramPacket) sendQueue.get(0));
-                 } catch (IOException e) {
-                    e.printStackTrace();
-                 }
+            try {
+                Turtle.log(sendQueue.toString());
+                if(sendQueue.peek() == null){
+                    Turtle.log("[NetworkHandler] no packet to send.");
+                } else {
+                    Turtle.log("[NetworkHandler] Heigh-ho, heigh-ho, sending a packet we go!");
+                    socket.send(sendQueue.poll());
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }

@@ -20,6 +20,7 @@ public class ConnectedPing extends BasePacket {
 
     public void decode(){
         this.pingID = buffer.getLong(1);
+        buffer.get(magic); //thanks Intyre :)
     }
 
     public void encode(){

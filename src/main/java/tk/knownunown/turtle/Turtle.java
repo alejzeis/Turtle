@@ -23,7 +23,7 @@ public class Turtle extends Thread {
     }
 
     public static String getIdentifier(){
-        return "MCPP;MINECON;" + serverName;
+        return "MCPP;Demo;" + serverName;
     }
 
     public void run(){

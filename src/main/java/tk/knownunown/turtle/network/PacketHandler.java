@@ -12,29 +12,31 @@ import java.util.Random;
  */
 public class PacketHandler extends Thread {
 
-    public PacketHandler(){
-        this.start();
+    protected DatagramPacket packet;
+    protected NetworkHandler networkHandler;
+
+    public PacketHandler(NetworkHandler networkHandler, DatagramPacket packet){
+        Turtle.log("[PacketHandler] new PacketHandler started with packet ID " + packet.getData()[0]);
+        this.packet = packet;
+        this.networkHandler = networkHandler;
     }
     @SuppressWarnings("unchecked")
     public void run(){
-        while(!NetworkHandler.isStopped){
-            if(!NetworkHandler.recvQueue.isEmpty()){
-                DatagramPacket packet = ((DatagramPacket) NetworkHandler.recvQueue.get(0));
-                switch(packet.getData()[0]){
-                   case PacketInfo.UnconnectedPing:
-                       ConnectedPing recv = new ConnectedPing(packet);
-                       recv.decode();
-                       Turtle.log("[PacketHandler] Received packet" + PacketInfo.UnconnectedPing + "from"  + packet.getAddress().toString() + ":" + packet.getPort() + " :)");
-                       UnconnectedPingOpenConnections reply = new UnconnectedPingOpenConnections(packet.getAddress(), packet.getPort());
-                       reply.pingID = recv.pingID;
-                       reply.serverID = (new Random()).nextLong();
-                       reply.identifier = Turtle.getIdentifier();
-                       reply.encode();
-                       Turtle.log("[PacketHandler] Adding packet " + PacketInfo.UnconnectedPingOpenConnections + " to NetworkHandler queue for sending :)");
-                       NetworkHandler.sendQueue.add(reply.getPacket());
-                       break;
-                }
-            }
+        switch(packet.getData()[0]){
+            case PacketInfo.ConnectedPing:
+            case PacketInfo.UnconnectedPing:
+                ConnectedPing recv = new ConnectedPing(packet);
+                recv.decode();
+                Turtle.log("[PacketHandler] Received packet " + PacketInfo.ConnectedPing + " from "  + packet.getAddress().toString() + ":" + packet.getPort() + " :)");
+                Turtle.log("[PacketHandler] 0x01 Ping ID: " + String.valueOf(recv.pingID));
+                UnconnectedPingOpenConnections reply = new UnconnectedPingOpenConnections(packet.getAddress(), packet.getPort());
+                reply.pingID = recv.pingID;
+                reply.serverID = 925686942; //hehe :)
+                reply.identifier = Turtle.getIdentifier();
+                reply.encode();
+                Turtle.log("[PacketHandler] Adding packet " + PacketInfo.UnconnectedPingOpenConnections + " to NetworkHandler queue for sending :)");
+                networkHandler.sendQueue.add(reply.getPacket());
+                break;
         }
     }
 }
