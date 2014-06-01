@@ -23,8 +23,8 @@ public class UnconnectedPingOpenConnections extends BasePacket {
     }
 
     public void encode(){
-        buffer = ByteBuffer.allocate(46 + identifier.length());
-        buffer.putInt(PacketInfo.UnconnectedPingOpenConnections);
+        buffer = ByteBuffer.allocate(35 + identifier.length());
+        buffer.put((byte) PacketInfo.UnconnectedPingOpenConnections);
         buffer.putLong(pingID);
         buffer.putLong(serverID);
         buffer.put(magic);

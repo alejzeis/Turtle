@@ -15,6 +15,6 @@ abstract class BasePacket implements Packet {
     protected ByteBuffer buffer;
     public InetAddress ip;
     public int port;
-    public byte[] magic = new byte[16]; //thankx Intyre <3
+    public byte[] magic = {(byte)0x00,(byte)0xff,(byte)0xff,(byte)0x00,(byte)0xfe,(byte)0xfe,(byte)0xfe,(byte)0xfe,(byte)0xfd,(byte)0xfd,(byte)0xfd,(byte)0xfd,(byte)0x12,(byte)0x34,(byte)0x56,(byte)0x78};
 
 }

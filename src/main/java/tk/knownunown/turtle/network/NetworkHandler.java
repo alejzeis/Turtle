@@ -48,7 +48,6 @@ public class NetworkHandler extends Thread {
                 e.printStackTrace();
             }
             try {
-                Turtle.log(sendQueue.toString());
                 if(sendQueue.peek() == null){
                     Turtle.log("[NetworkHandler] no packet to send.");
                 } else {
