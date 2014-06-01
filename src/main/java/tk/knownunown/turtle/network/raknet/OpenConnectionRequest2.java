@@ -1,17 +1,17 @@
 package tk.knownunown.turtle.network.raknet;
 
 import java.net.DatagramPacket;
-import java.net.InetAddress;
 import java.nio.ByteBuffer;
 
 /**
- * Created by andrew on 5/24/14.
+ * Created by andrew on 6/1/14.
  */
-public class ConnectedPing extends BasePacket {
+public class OpenConnectionRequest2 extends BasePacket {
 
-    public long pingID;
+    public short mtu;
+    public long clientID;
 
-    public ConnectedPing(DatagramPacket packet){
+    public OpenConnectionRequest2(DatagramPacket packet){
         this.buffer = ByteBuffer.wrap(packet.getData());
         this.ip = packet.getAddress();
         this.port = packet.getPort();
@@ -19,12 +19,13 @@ public class ConnectedPing extends BasePacket {
     }
 
     @Override
-    public void decode(){
-        this.pingID = buffer.getLong(1);
+    public void encode(){
+
     }
 
     @Override
-    public void encode(){
-
+    public void decode(){
+        this.mtu = buffer.getShort(4);
+        this.clientID = buffer.getLong(5);
     }
 }

@@ -30,9 +30,7 @@ public class UnconnectedPingOpenConnections extends BasePacket {
         buffer.put(magic);
         buffer.putShort((short) identifier.length());
         buffer.put(identifier.getBytes());
-        byte[] bytes = new byte[buffer.clear().capacity()];
-        buffer.get(bytes);
-        this.packet = new DatagramPacket(bytes, bytes.length, ip, port);
+        this.packet = new DatagramPacket(buffer.array(), buffer.capacity(), ip, port);
     }
 
     public DatagramPacket getPacket(){

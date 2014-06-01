@@ -5,7 +5,7 @@ package tk.knownunown.turtle.network;
  */
 public interface Packet {
 
-    public void decode();
-
     public void encode();
+
+    public void decode();
 }
