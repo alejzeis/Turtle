@@ -67,6 +67,9 @@ public class PacketHandler extends Thread {
                 reply.encode();
                 networkHandler.sendQueue.add(reply.getPacket());
             }
+            default: {
+                Turtle.log("[PacketHandler] Data Encapsulation packet detected! These packets are currently NOT supported. PID: 0x" + Integer.toHexString(packet.getData()[0]) + " length: " + (packet.getLength() / 8));
+            }
         }
     }
 }
