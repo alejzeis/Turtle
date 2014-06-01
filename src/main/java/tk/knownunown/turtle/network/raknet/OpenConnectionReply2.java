@@ -23,6 +23,7 @@ public class OpenConnectionReply2 extends BasePacket{
     @Override
     public void encode(){
         buffer = ByteBuffer.allocate(30);
+        buffer.put(PacketInfo.OpenConnectionReply2);
         buffer.put(magic);
         buffer.putLong(serverID);
         buffer.putInt(port);

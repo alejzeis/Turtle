@@ -21,6 +21,7 @@ public class OpenConnectionReply1 extends BasePacket {
     @Override
     public void encode(){
         buffer = ByteBuffer.allocate(28);
+        buffer.put(PacketInfo.OpenConnectionReply1);
         buffer.put(magic);
         buffer.putLong(serverID);
         buffer.put(security);

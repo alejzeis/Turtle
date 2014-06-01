@@ -40,7 +40,7 @@ public class PacketHandler extends Thread {
             case PacketInfo.OpenConnectionRequest1: {
                 OpenConnectionRequest1 recv = new OpenConnectionRequest1(packet);
                 recv.decode();
-                if(recv.structure == ProtocolInfo.currentStructure){
+                if((int) recv.structure == ProtocolInfo.currentStructure){
                     OpenConnectionReply1 reply = new OpenConnectionReply1(packet.getAddress(), packet.getPort());
                     reply.serverID = ProtocolInfo.serverID;
                     reply.security = 0;
