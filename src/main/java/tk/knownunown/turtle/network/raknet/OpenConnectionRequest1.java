@@ -1,12 +1,14 @@
 package tk.knownunown.turtle.network.raknet;
 
+import tk.knownunown.turtle.network.BasePacket;
+
 import java.net.DatagramPacket;
 import java.nio.ByteBuffer;
 
 /**
  * Created by andrew on 6/1/14.
  */
-public class OpenConnectionRequest1 extends BasePacket{
+public class OpenConnectionRequest1 extends BasePacket {
 
     public byte structure;
     public short mtu;

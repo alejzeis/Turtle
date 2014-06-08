@@ -1,5 +1,7 @@
 package tk.knownunown.turtle.network.raknet;
 
+import tk.knownunown.turtle.network.BasePacket;
+
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.nio.ByteBuffer;
@@ -7,7 +9,7 @@ import java.nio.ByteBuffer;
 /**
  * Created by andrew on 6/1/14.
  */
-public class OpenConnectionReply2 extends BasePacket{
+public class OpenConnectionReply2 extends BasePacket {
 
     public InetAddress ip;
     public int port;

@@ -1,4 +1,4 @@
-package tk.knownunown.turtle.network.raknet;
+package tk.knownunown.turtle.network;
 
 import tk.knownunown.turtle.network.Packet;
 
@@ -9,7 +9,7 @@ import java.nio.ByteBuffer;
 /**
  * Created by andrew on 5/24/14.
  */
-abstract class BasePacket implements Packet {
+public abstract class BasePacket implements Packet {
 
     protected DatagramPacket packet;
     protected ByteBuffer buffer;

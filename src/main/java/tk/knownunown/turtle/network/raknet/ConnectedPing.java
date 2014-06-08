@@ -1,7 +1,8 @@
 package tk.knownunown.turtle.network.raknet;
 
+import tk.knownunown.turtle.network.BasePacket;
+
 import java.net.DatagramPacket;
-import java.net.InetAddress;
 import java.nio.ByteBuffer;
 
 /**

@@ -5,7 +5,6 @@ import java.net.DatagramPacket;
 import tk.knownunown.turtle.Turtle;
 import tk.knownunown.turtle.network.raknet.*;
 
-import java.util.Random;
 /**
  * Created by andrew on 5/31/14.
  */
@@ -69,7 +68,7 @@ public class PacketHandler extends Thread {
                 networkHandler.sendQueue.add(reply.getPacket());
             }
             default: {
-                Turtle.log("[PacketHandler] Data Encapsulation packet detected! These packets are currently NOT supported. PID: 0x" + Integer.toHexString(packet.getData()[0]) + " length: " + (packet.getLength() / 8));
+                Turtle.log("[PacketHandler] Data Encapsulation packet detected! These packets are currently NOT supported. PID: 0x" + Integer.toHexString((packet.getData()[0] & 0xff)) + ", Encapsulation ID: " + Integer.toHexString(packet.getData()[5] & 0xff));
             }
         }
     }
