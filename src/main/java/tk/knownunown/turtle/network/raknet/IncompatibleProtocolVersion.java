@@ -24,7 +24,7 @@ public class IncompatibleProtocolVersion extends BasePacket {
     @Override
     public void encode() {
         buffer = ByteBuffer.allocate(26);
-        buffer.put(PacketInfo.IncompatibleProtocolVersion);
+        buffer.put(RakPacketInfo.IncompatibleProtocolVersion);
         buffer.put(structure);
         buffer.putLong(serverID);
         this.packet = new DatagramPacket(buffer.array(), buffer.capacity(), ip, port);

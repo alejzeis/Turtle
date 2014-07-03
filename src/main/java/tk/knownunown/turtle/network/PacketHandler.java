@@ -3,7 +3,9 @@ package tk.knownunown.turtle.network;
 import java.net.DatagramPacket;
 
 import tk.knownunown.turtle.Turtle;
+import tk.knownunown.turtle.network.minecraftpe.misc.AcknowledgePacket;
 import tk.knownunown.turtle.network.raknet.*;
+import tk.knownunown.turtle.network.minecraftpe.*;
 
 /**
  * Created by andrew on 5/31/14.
@@ -21,22 +23,22 @@ public class PacketHandler extends Thread {
     @SuppressWarnings("unchecked")
     public void run(){
         switch(packet.getData()[0]){
-            case PacketInfo.ConnectedPing:
-            case PacketInfo.UnconnectedPing: {
+            case RakPacketInfo.ConnectedPing:
+            case RakPacketInfo.UnconnectedPing: {
                 ConnectedPing recv = new ConnectedPing(packet);
                 recv.decode();
-                Turtle.log("Received packet " + PacketInfo.ConnectedPing + " from "  + packet.getAddress().toString() + ":" + packet.getPort() + " :)");
+                Turtle.log("Received packet " + RakPacketInfo.ConnectedPing + " from "  + packet.getAddress().toString() + ":" + packet.getPort() + " :)");
                 Turtle.log("0x01 Ping ID: " + String.valueOf(recv.pingID));
                 UnconnectedPingOpenConnections reply = new UnconnectedPingOpenConnections(packet.getAddress(), packet.getPort());
                 reply.pingID = recv.pingID;
                 reply.serverID = ProtocolInfo.serverID;
                 reply.identifier = Turtle.getIdentifier();
                 reply.encode();
-                Turtle.log("[PacketHandler] Adding packet " + PacketInfo.UnconnectedPingOpenConnections + " to NetworkHandler queue for sending :)");
+                Turtle.log("[PacketHandler] Adding packet " + RakPacketInfo.UnconnectedPingOpenConnections + " to NetworkHandler queue for sending :)");
                 networkHandler.sendQueue.add(reply.getPacket());
                 break;
             }
-            case PacketInfo.OpenConnectionRequest1: {
+            case RakPacketInfo.OpenConnectionRequest1: {
                 OpenConnectionRequest1 recv = new OpenConnectionRequest1(packet);
                 recv.decode();
                 if((int) recv.structure == ProtocolInfo.currentStructure){
@@ -56,7 +58,7 @@ public class PacketHandler extends Thread {
                 }
                 break;
             }
-            case PacketInfo.OpenConnectionRequest2: {
+            case RakPacketInfo.OpenConnectionRequest2: {
                 OpenConnectionRequest2 recv = new OpenConnectionRequest2(packet);
                 recv.decode();
                 OpenConnectionReply2 reply = new OpenConnectionReply2(packet.getAddress(), packet.getPort());
@@ -67,8 +69,8 @@ public class PacketHandler extends Thread {
                 reply.encode();
                 networkHandler.sendQueue.add(reply.getPacket());
             }
-            default: {
-                Turtle.log("[PacketHandler] Data Encapsulation packet detected! These packets are currently NOT supported. PID: 0x" + Integer.toHexString((packet.getData()[0] & 0xff)) + ", Encapsulation ID: " + Integer.toHexString(packet.getData()[5] & 0xff));
+            case PEPacketInfo.ReadyPacket: {
+
             }
         }
     }

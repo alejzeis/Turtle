@@ -1,6 +1,7 @@
 package tk.knownunown.turtle.network.raknet;
 
 import tk.knownunown.turtle.network.BasePacket;
+import tk.knownunown.turtle.network.raknet.misc.BaseRakNetPacket;
 
 import java.net.DatagramPacket;
 import java.net.InetAddress;
@@ -9,7 +10,7 @@ import java.nio.ByteBuffer;
 /**
  * Created by andrew on 5/31/14.
  */
-public class UnconnectedPingOpenConnections extends BasePacket {
+public class UnconnectedPingOpenConnections extends BaseRakNetPacket {
 
     public long pingID;
     public long serverID;
@@ -26,7 +27,7 @@ public class UnconnectedPingOpenConnections extends BasePacket {
 
     public void encode(){
         buffer = ByteBuffer.allocate(35 + identifier.length());
-        buffer.put((byte) PacketInfo.UnconnectedPingOpenConnections);
+        buffer.put((byte) RakPacketInfo.UnconnectedPingOpenConnections);
         buffer.putLong(pingID);
         buffer.putLong(serverID);
         buffer.put(magic);

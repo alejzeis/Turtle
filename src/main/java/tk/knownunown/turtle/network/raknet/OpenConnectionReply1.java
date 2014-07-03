@@ -1,6 +1,6 @@
 package tk.knownunown.turtle.network.raknet;
 
-import tk.knownunown.turtle.network.BasePacket;
+import tk.knownunown.turtle.network.raknet.misc.BaseRakNetPacket;
 
 import java.net.DatagramPacket;
 import java.net.InetAddress;
@@ -9,7 +9,7 @@ import java.nio.ByteBuffer;
 /**
  * Created by andrew on 6/1/14.
  */
-public class OpenConnectionReply1 extends BasePacket {
+public class OpenConnectionReply1 extends BaseRakNetPacket {
 
     public long serverID;
     public byte security;
@@ -23,7 +23,7 @@ public class OpenConnectionReply1 extends BasePacket {
     @Override
     public void encode(){
         buffer = ByteBuffer.allocate(28);
-        buffer.put(PacketInfo.OpenConnectionReply1);
+        buffer.put(RakPacketInfo.OpenConnectionReply1);
         buffer.put(magic);
         buffer.putLong(serverID);
         buffer.put(security);
